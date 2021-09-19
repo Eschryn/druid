@@ -84,6 +84,7 @@ impl WinHandler for AppState {
         let mut doc = self.document.borrow_mut();
         doc.text_engine = Some(handle.text());
         doc.refresh_layout();
+        self.handle.update_text_field(token, Event::LayoutChanged);
     }
 
     fn prepare_paint(&mut self) {
@@ -217,6 +218,7 @@ impl InputHandler for AppInputHandler {
             doc.selection.active = range.start + text.len();
         }
         doc.refresh_layout();
+        self.handle.update_text_field(token, Event::LayoutChanged);
         doc.composition = None;
         self.window_handle.request_anim_frame();
     }
